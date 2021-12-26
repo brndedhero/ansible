@@ -12,3 +12,11 @@
   roles:
   - kubernetes
   become: yes
+
+- hosts: kubeworkers
+  roles:
+  - kubeworkers
+  become: yes
+  vars:
+    kubernetes_master_ip: '192.168.1.141'
+    kubernetes_token: '128ca23307f69fa29e9b8af3640b22c9/3968d53b0333'
