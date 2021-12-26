@@ -1,0 +1,4 @@
+- name: Install MicroK8s
+  community.general.snap:
+    name: microk8s
+    classic: yes
