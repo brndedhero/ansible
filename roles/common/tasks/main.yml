@@ -1,5 +1,9 @@
 - name: Extract Node Exporter
   ansible.builtin.unarchive:
     src: https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_arch }}.tar.gz
+    exclude:
+    - NOTICE
+    - LICENSE
     dest: /usr/local/bin
     remote_src: yes
+    creates: /usr/local/bin/node_exporter
