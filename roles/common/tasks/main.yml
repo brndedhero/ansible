@@ -1,9 +1,29 @@
 - name: Extract Node Exporter
   ansible.builtin.unarchive:
     src: https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_arch }}.tar.gz
-    exclude:
-    - NOTICE
-    - LICENSE
     dest: /usr/local/bin
     remote_src: yes
-    creates: /usr/local/bin/node_exporter
+    creates: /usr/local/bin/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_arch }}/node_exporter
+
+- name: Create Node Exporter Service File
+  ansible.builtin.template:
+    src: node_exporter.service.j2
+    dest: /lib/systemd/system/node_exporter.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Link Node Exporter Service File
+  ansible.builtin.file:
+    src: /lib/systemd/system/node_exporter.service
+    dest: /etc/systemd/system/node_exporter.service
+    owner: root
+    group: root
+    state: link
+
+- name: Start Node Exporter Service
+  ansible.builtin.systemd:
+    name: node_exporter
+    daemon_reload: yes
+    enabled: yes
+    state: started

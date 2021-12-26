@@ -1,0 +1,12 @@
+[Unit]
+Description=Prometheus Node Exporter
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+User=root
+ExecStart=/usr/local/bin/node_exporter-{{ node_exporter_version }}.linux-{{ cpu_arch }}/node_exporter
+
+[Install]
+WantedBy=multi-user.target
