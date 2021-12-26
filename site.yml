@@ -7,3 +7,7 @@
   vars:
     node_exporter_version: '1.3.1'
     cpu_arch: 'arm64'
+
+- hosts: kubernetes-master
+  roles:
+  - kubernetes-master
