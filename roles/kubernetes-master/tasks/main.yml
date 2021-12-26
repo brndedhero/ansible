@@ -1,3 +1,11 @@
 - name: Install K3s
   ansible.builtin.shell:
     cmd: curl -sfL https://get.k3s.io | sh -
+    creates: /usr/local/bin/kubectl
+
+- name: Open K3s Firewall Ports
+  ansible.builtin.iptables:
+    chain: INPUT
+    protocol: TCP
+    destination_port: 6443
+    jump: ACCEPT
